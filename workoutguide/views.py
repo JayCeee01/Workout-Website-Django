@@ -15,5 +15,6 @@ def why(request):
 def trainers(request):
     return render(request, 'workoutguide/trainer.html')
 
-def contact(request):
-    return render(request, 'workoutguide/contact.html')
+def workoutplan(request):
+    workouts = Workout.objects.all()
+    return render(request, 'workoutguide/workoutplan.html', {'workouts': workouts})

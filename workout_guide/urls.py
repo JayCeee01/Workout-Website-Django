@@ -29,7 +29,8 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('why/', views.why, name='why_us'),
     path('trainers/', views.trainers, name='trainers'),
-    path('contact/', views.contact, name='contact'),  
+    path('workoutplan/', views.workoutplan, name='workoutplan'),  
+    
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

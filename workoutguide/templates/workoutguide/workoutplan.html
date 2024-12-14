@@ -3,6 +3,100 @@
 <html>
 
 <head>
+  <style>
+  /* General section styling */
+    .workout_section {
+      background-color: #c0d8f0;
+      padding: 50px 0;
+    }
+    
+    .section_title {
+      font-size: 32px;
+      font-weight: bold;
+      color: #f5f4f8;
+      margin-bottom: 30px;
+    }
+    
+    .section_subtitle {
+      font-size: 16px;
+      color: #f1eeee;
+      margin-bottom: 30px;
+    }
+    
+    /* Workout card styling */
+    .workout-card {
+      background: #f8f6f6;
+      height: 100%; /* Ensure cards have consistent height */
+      border-radius: 10px;
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .workout-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .workout-image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    .workout-details {
+      text-align: center;
+      padding: 15px;
+    }
+    
+    .workout-name {
+      font-size: 20px;
+      font-weight: 600;
+      color: #27223f;
+      margin-bottom: 10px;
+    }
+    
+    .workout-description {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    
+    /* Responsive layout adjustments */
+    @media (max-width: 768px) {
+      .section_title {
+        font-size: 28px;
+      }
+    
+      .workout-description {
+        font-size: 13px;
+      }
+    }
+
+    /* Workout card button styling */
+.workout-btn {
+  background-color: #27223f;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.workout-btn:hover {
+  background-color: #49406b;
+  color: #fff;
+  text-decoration: none;
+}
+
+.text-center.mt-auto {
+  margin-top: auto; /* Push the button to the bottom */
+}
+
+    </style>
+  
   <!-- Basic -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -29,6 +123,7 @@
   <link href="{% static 'workoutguide/css/responsive.css' %}" rel="stylesheet" />
 </head>
 
+
 <body class="sub_page">
   <div class="hero_area">
     <!-- header section strats -->
@@ -47,25 +142,24 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
               <ul class="navbar-nav  ">
-                <li class="nav-item ">
-                  <a class="nav-link" href="workoutguide/templates/workoutguide/index.html">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item active">
+                  <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item ">
-                  <a class="nav-link" href="workoutguide/templates/workoutguide/why.html"> Why us </a>
+                  <a class="nav-link" href="{% url 'home' %}#why">Info</a>
                 </li>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="workoutguide/templates/workoutguide/trainer.html"> trainers</a>
+                  <a class="nav-link" href="{% url 'home' %}#trainers"> Devs</a>
                 </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="workoutguide/templates/workoutguide/contact.html"> Contact Us</a>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'home' %}#contact"> Contact Us</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'workoutplan' %}"> Workout Plan</a>
                 </li>
               </ul>
-              <div class="user_option">
-                <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
-                  <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit"></button>
-                </form>
-              </div>
+              
             </div>
           </div>
         </nav>
@@ -78,45 +172,33 @@
 
   <!-- contact section -->
 
-  <section class="contact_section ">
-    <div class="container-fluid">
+  <section class="trainer_section layout_padding">
+    <div class="container">
+      <div class="heading_container text-center mb-4">
+        <h2 class="section_title">Workout Guide</h2>
+        
+      </div>
       <div class="row">
-        <div class="col-md-6 px-0">
-          <div class="img-box">
-            <img src="images/contact-img.jpg" alt="">
-          </div>
-        </div>
-        <div class="col-lg-5 col-md-6">
-          <div class="form_container pr-0 pr-lg-5 mr-0 mr-lg-2">
-            <div class="heading_container">
-              <h2>
-                Contact Us
-              </h2>
+        {% for workout in workouts %}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="workout-card shadow-sm d-flex flex-column">
+            <div class="workout-image">
+              <img src="{{ workout.image.url }}" alt="{{ workout.name }}" class="img-fluid">
             </div>
-            <form action="">
-              <div>
-                <input type="text" placeholder="Name" />
-              </div>
-              <div>
-                <input type="email" placeholder="Email" />
-              </div>
-              <div>
-                <input type="text" placeholder="Phone Number" />
-              </div>
-              <div>
-                <input type="text" class="message-box" placeholder="Message" />
-              </div>
-              <div class="d-flex ">
-                <button>
-                  Send
-                </button>
-              </div>
-            </form>
+            <div class="workout-details flex-grow-1 p-3">
+              <h3 class="workout-name text-center">{{ workout.name }}</h3>
+              <p class="workout-description text-muted text-center">{{ workout.description|linebreaksbr }}</p>
+            </div>
+            <div class="text-center mt-auto p-3">
+              <a href="{{ workout.link }}" target="_blank"class="btn btn-primary workout-btn">Learn More</a>
+            </div>
           </div>
         </div>
+        {% endfor %}
       </div>
     </div>
   </section>
+  
 
   <!-- end contact section -->
 
