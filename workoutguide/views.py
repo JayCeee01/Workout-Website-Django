@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from .models import Workout, Tip
+from .models import Workout
 
 def index(request):
     workouts = Workout.objects.all()
-    tips = Tip.objects.all()
-    return render(request, 'workoutguide/index.html', {'workouts': workouts, 'tips': tips})
+    return render(request, 'workoutguide/index.html', {'workouts': workouts})
 
 def home(request):
     return render(request, 'workoutguide/index.html')
